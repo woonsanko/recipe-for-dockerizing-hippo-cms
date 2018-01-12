@@ -4,7 +4,14 @@
 
 TODO
 
-## Dockerizing Your Hippo project
+## Steps Overview
+
+- Step 1: **\[Dockerization\]** Add ```docker``` profile.
+- Step 2: **\[Dockerization\]** Add ```Dockerfile```.
+- Step 3: Create Docker image
+- Step 4: Test and Validation
+
+## Step 1: \[Dockerization\] Add ```docker``` profile
 
 Add the following profile in the root pom.xml:
 
@@ -42,7 +49,13 @@ Add the following profile in the root pom.xml:
     </profile>
 ```
 
-## Creating Docker Image
+## Step 2: \[Dockerization\] Add ```Dockerfile``` 
+
+Copy [Dockerfile](examples/Dockerfile) to your project root folder, next to the root ```pom.xml```.
+
+Review the environment variables in the ```Dockerfile``` and adjust somethings if necessary for your environment.
+
+## Step 3: Create Docker image
 
 After building and creating the distribution tar ball, execute ```mvn -P docker``` additionally like the following:
 
@@ -52,3 +65,6 @@ $ mvn -P dist
 $ mvn -P docker
 ```
 
+## Step 4: Validation
+
+TODO
