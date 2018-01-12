@@ -4,11 +4,11 @@
 
 FROM tomcat:8.5-jre8
 
-# Tomcat Base Directory
+# Tomcat Base Directory, inherited from the base image by default.
 ENV CATALINA_BASE "/usr/local/tomcat"
 
 ###############################################################################
-# Environment Variables
+# Environment Variable Configurations
 ###############################################################################
 
 # JVM Heap Size
@@ -24,9 +24,13 @@ ENV REPO_CONFIG "file:${CATALINA_BASE}/conf/repository.xml"
 # Bootstrapping enabled?
 ENV REPO_BOOTSTRAP "true"
 
+###############################################################################
+# Merging the Environment Variables
+###############################################################################
+
 ENV REP_OPTS "-Drepo.bootstrap=${REPO_BOOTSTRAP} -Drepo.config=${REPO_CONFIG}"
 ENV JVM_OPTS "-server -Xms${MIN_HEAP_SIZE} -Xmx${MAX_HEAP_SIZE} -XX:+UseG1GC -Djava.util.Arrays.useLegacyMergeSort=true"
-ENV HEAP_DMP_OPTS "-XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=${CATALINA_BASE}/temp"
+ENV DMP_OPTS "-XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=${CATALINA_BASE}/temp"
 ENV RMI_OPTS "-Djava.rmi.server.hostname=127.0.0.1"
 ENV JRC_OPTS "-Dorg.apache.jackrabbit.core.cluster.node_id=${CLUSTER_ID}"
 ENV L4J_OPTS "-Dlog4j.configurationFile=file://${CATALINA_BASE}/conf/log4j2.xml -DLog4jContextSelector=org.apache.logging.log4j.core.selector.BasicContextSelector"
@@ -35,7 +39,7 @@ ENV VGC_OPTS "-verbosegc -XX:+PrintGCDetails -XX:+PrintGCDateStamps -Xloggc:${CA
 ENV CATALINA_OPTS "${JVM_OPTS} ${VGC_OPTS} ${REP_OPTS} ${DMP_OPTS} ${RMI_OPTS} ${L4J_OPTS} ${JRC_OPTS}"
 
 ###############################################################################
-# Remove existing artifacts and extract the tar ball
+# Remove existing artifacts and install new ones by extracting the tar ball
 ###############################################################################
 
 RUN rm -rf ${CATALINA_BASE}/common/lib/*.jar
