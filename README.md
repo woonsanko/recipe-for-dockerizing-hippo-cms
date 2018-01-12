@@ -66,4 +66,7 @@ $ mvn clean verify && mvn -P dist && mvn -P docker
 
 ## Step 4: Validation
 
-TODO
+```bash
+$ docker run -p 8080:8080 <image>
+```
+
