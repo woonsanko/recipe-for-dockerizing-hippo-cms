@@ -7,6 +7,10 @@ FROM tomcat:8.5-jre8
 # Tomcat Base Directory, inherited from the base image by default.
 ENV CATALINA_BASE "/usr/local/tomcat"
 
+# Customize catalina.properties to add additional common and shared loader jar paths.
+RUN sed -i s:common.loader=:common.loader=\${catalina.base}/lib,\${catalina.base}/lib/\*\.jar,\${catalina.base}/common/lib/\*\.jar,\${catalina.home}/lib,\${catalina.home}/lib/\*\.jar:g ${CATALINA_BASE}/conf/catalina.properties
+RUN sed -i s:shared.loader=:shared.loader=\${catalina.base}/shared/classes,\${catalina.base}/shared/lib/\*\.jar:g ${CATALINA_BASE}/conf/catalina.properties
+
 ###############################################################################
 # Environment Variable Configurations
 ###############################################################################
