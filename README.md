@@ -58,12 +58,10 @@ Review the **Environment Variable Configurations** section in the ```Dockerfile`
 
 ## Step 3: Create Docker image
 
-After building and creating the distribution tar ball, execute ```mvn -P docker``` additionally like the following:
+After building and creating the distribution tar ball, execute ```mvn -P docker``` additionally like the following example:
 
 ```
-$ mvn clean verify
-$ mvn -P dist
-$ mvn -P docker
+$ mvn clean verify && mvn -P dist && mvn -P docker
 ```
 
 ## Step 4: Validation
