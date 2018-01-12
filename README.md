@@ -15,7 +15,7 @@ TODO
 
 Add the following profile in the root pom.xml:
 
-```
+```xml
     <profile>
       <id>docker</id>
       <build>
