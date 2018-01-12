@@ -37,6 +37,7 @@ Add the following profile in the root pom.xml:
               </execution>
             </executions>
             <configuration>
+              <!-- Change repository name for your env. -->
               <repository>cms/${project.artifactId}</repository>
               <tag>${project.version}</tag>
               <buildArgs>
