@@ -53,7 +53,7 @@ Add the following profile in the root pom.xml:
 
 Copy [Dockerfile](examples/Dockerfile) to your project root folder, next to the root ```pom.xml```.
 
-Review the environment variables in the ```Dockerfile``` and adjust somethings if necessary for your environment.
+Review the **Environment Variable Configurations** section in the ```Dockerfile``` and adjust somethings if necessary for your environment.
 
 ## Step 3: Create Docker image
 
