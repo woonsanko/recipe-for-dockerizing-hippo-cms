@@ -1,4 +1,4 @@
-# recipe-for-dockerizing-hippo-cms
+# Recipe for Dockerizing Hippo CMS
 
 ## Introduction
 
