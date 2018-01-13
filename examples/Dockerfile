@@ -19,20 +19,29 @@ RUN sed -i s:shared.loader=\.\*:shared.loader=\${catalina.base}/shared/classes,\
 ENV MIN_HEAP_SIZE "1024m"
 ENV MAX_HEAP_SIZE "2048m"
 
-# Repository Cluster Node ID
-ENV CLUSTER_ID "$(whoami)-$(hostname -f)"
-
 # Repository Configuration File
 ENV REPO_CONFIG "file:${CATALINA_BASE}/conf/repository.xml"
 
+# Repository Directory
+ENV REPO_DIRECTORY "${CATALINA_BASE}/repository"
+
 # Bootstrapping enabled?
 ENV REPO_BOOTSTRAP "true"
+
+# Repository Cluster Node ID
+ENV CLUSTER_ID "$(whoami)-$(hostname -f)"
+
+###############################################################################
+# Lucene Index Initialization from an index export zip if available.
+###############################################################################
+
+
 
 ###############################################################################
 # Merging the Environment Variables
 ###############################################################################
 
-ENV REP_OPTS "-Drepo.bootstrap=${REPO_BOOTSTRAP} -Drepo.config=${REPO_CONFIG}"
+ENV REP_OPTS "-Drepo.bootstrap=${REPO_BOOTSTRAP} -Drepo.config=${REPO_CONFIG} -Drepo.path=${REPO_DIRECTORY}"
 ENV JVM_OPTS "-server -Xms${MIN_HEAP_SIZE} -Xmx${MAX_HEAP_SIZE} -XX:+UseG1GC -Djava.util.Arrays.useLegacyMergeSort=true"
 ENV DMP_OPTS "-XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=${CATALINA_BASE}/temp"
 ENV RMI_OPTS "-Djava.rmi.server.hostname=127.0.0.1"
