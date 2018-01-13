@@ -1,8 +1,6 @@
 # Recipe for Dockerizing Hippo CMS
 
-## Introduction
-
-TODO
+This recipe explains how to dockerize a Hippo CMS project, using [Dockerfile Maven Plugin](https://github.com/spotify/dockerfile-maven) and a Dockerfile, based on the existing maven profiles such as ```mvn -P dist```, for simplicity.
 
 ## Steps Overview
 
