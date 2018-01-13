@@ -6,7 +6,7 @@ TODO
 
 ## Steps Overview
 
-- Step 1: **\[Dockerization\]** Add ```docker``` profile.
+- Step 1: Review and Correct Project Distribution Profile.
 - Step 2: **\[Dockerization\]** Add ```docker``` profile.
 - Step 3: **\[Dockerization\]** Add ```Dockerfile```.
 - Step 4: Create Docker image
