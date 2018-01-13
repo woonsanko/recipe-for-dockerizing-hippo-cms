@@ -18,7 +18,7 @@ Therefore, please make sure your distribution profile (```mvn -P dist``` by defa
 
 If you just want to extract the default ```repository.xml``` used in local development environment with using H2 database, just for testing, then please download it from [https://code.onehippo.org/cms-community/hippo-repository/blob/master/resources/src/main/resources/org/hippoecm/repository/repository.xml](https://code.onehippo.org/cms-community/hippo-repository/blob/master/resources/src/main/resources/org/hippoecm/repository/repository.xml) to ```conf/repository.xml```.
 
-Note: Any new file items must be configured in the distribution assembly XML file(s) properly to be included in the distribution tar ball in the end. For example, if you added ```conf/repository.xml``` in the source folder, then don't forget to add the following in ```src/main/assembly/conf-component.xml``` file. Otherwise, the ```conf/repository/xml``` wouldn't be included in the distribution tar ball:
+Note: Any new file items must be configured in the distribution assembly XML file(s) properly to be included in the distribution tar ball in the end. For example, if you added ```conf/repository.xml``` in the source folder, then don't forget to add the following in ```src/main/assembly/conf-component.xml``` file (or ```src/main/assembly/distribution.xml``` file in v11 or earlier). Otherwise, the ```conf/repository/xml``` wouldn't be included in the distribution tar ball:
 
 ```xml
     <file>
