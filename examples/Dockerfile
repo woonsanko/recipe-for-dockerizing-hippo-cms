@@ -37,7 +37,12 @@ ENV JVM_OPTS "-server -Xms${MIN_HEAP_SIZE} -Xmx${MAX_HEAP_SIZE} -XX:+UseG1GC -Dj
 ENV DMP_OPTS "-XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=${CATALINA_BASE}/temp"
 ENV RMI_OPTS "-Djava.rmi.server.hostname=127.0.0.1"
 ENV JRC_OPTS "-Dorg.apache.jackrabbit.core.cluster.node_id=${CLUSTER_ID}"
+
+# Logging Configurations
 ENV L4J_OPTS "-Dlog4j.configurationFile=file://${CATALINA_BASE}/conf/log4j2.xml -DLog4jContextSelector=org.apache.logging.log4j.core.selector.BasicContextSelector"
+# Uncomment the following line for Hippo CMS v11 or earlier version instead.
+# ENV L4J_OPTS="-Dlog4j.configuration=file://${CATALINA_BASE}/conf/log4j.xml"
+
 ENV VGC_OPTS "-verbosegc -XX:+PrintGCDetails -XX:+PrintGCDateStamps -Xloggc:${CATALINA_BASE}/logs/gc.log -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=5 -XX:GCLogFileSize=2048k"
 
 ENV CATALINA_OPTS "${JVM_OPTS} ${VGC_OPTS} ${REP_OPTS} ${DMP_OPTS} ${RMI_OPTS} ${L4J_OPTS} ${JRC_OPTS}"
