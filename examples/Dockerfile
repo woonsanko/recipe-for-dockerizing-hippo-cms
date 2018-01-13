@@ -28,7 +28,8 @@ ENV REPO_PATH "${CATALINA_BASE}/repository"
 # Bootstrapping enabled?
 ENV REPO_BOOTSTRAP "true"
 
-# Index Export ZIP File Path
+# Index Export ZIP File that you could have downloaded and shared it through a Volume at /data/index for example.
+# (ref: https://www.onehippo.org/library/enterprise/enterprise-features/lucene-index-export/lucene-index-export.html)
 ENV INDEX_ZIP_PATH "/data/index/index-export-latest.zip"
 
 # Repository Cluster Node ID
