@@ -81,6 +81,14 @@ $ mvn clean verify && mvn -P dist && mvn -P docker
 ## Step 5: Validation
 
 ```bash
-$ docker run -p 8080:8080 <image>
+$ docker run -p 8080:8080 "cms/myhippoproject:0.1.0-SNAPSHOT"
 ```
 
+Visit http://localhost:8080/site for delivery tier application, and visit http://localhost:8080/cms/ for authoring tier application, for example.
+
+## Useful Docker Documentation References
+
+- [docker docs: Getting Started](https://docs.docker.com/get-started/)
+- [docker docs: Dockerfile reference](https://docs.docker.com/engine/reference/builder/)
+- [docker docs: Command-Line Interfaces (CLIs)](https://docs.docker.com/engine/reference/commandline/docker/)
+- [DevTools CLI Documentation: Docs: Common Tasks: SSH into a container](http://phase2.github.io/devtools/common-tasks/ssh-into-a-container/)
