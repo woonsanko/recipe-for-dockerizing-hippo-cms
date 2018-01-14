@@ -62,8 +62,9 @@ Add the following profile in the root pom.xml:
               <repository>cms/${project.artifactId}</repository>
               <tag>${project.version}</tag>
               <buildArgs>
-                <!-- Please change the file name suffix if you use a different (custom) distribution profile. -->
                 <TAR_BALL>target/${project.artifactId}-${project.version}-distribution.tar.gz</TAR_BALL>
+                <SETENV_SH>src/main/tomcat/bin/setenv.sh</SETENV_SH>
+                <INDEXENV_SH>src/main/tomcat/bin/indexenv.sh</INDEXENV_SH>
               </buildArgs>
             </configuration>
           </plugin>
