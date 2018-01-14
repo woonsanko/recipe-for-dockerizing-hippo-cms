@@ -6,7 +6,7 @@ This recipe explains how to dockerize a Hippo CMS project, using [Dockerfile Mav
 
 - Step 1: Review and Correct Project Distribution Profile.
 - Step 2: **\[Dockerization\]** Add ```docker``` profile.
-- Step 3: **\[Dockerization\]** Add ```Dockerfile```, ```setenv.sh``` and ```indexenv.sh```.
+- Step 3: **\[Dockerization\]** Add ```Dockerfile```, ```setenv.sh``` and ```index-init.sh```.
 - Step 4: Create Docker image
 - Step 5: Test and Validation
 
@@ -64,7 +64,7 @@ Add the following profile in the root pom.xml:
               <buildArgs>
                 <TAR_BALL>target/${project.artifactId}-${project.version}-distribution.tar.gz</TAR_BALL>
                 <SETENV_SH>src/main/tomcat/bin/setenv.sh</SETENV_SH>
-                <INDEXENV_SH>src/main/tomcat/bin/indexenv.sh</INDEXENV_SH>
+                <INDEX_INIT_SH>src/main/tomcat/bin/index-init.sh</INDEX_INIT_SH>
               </buildArgs>
             </configuration>
           </plugin>
@@ -73,16 +73,16 @@ Add the following profile in the root pom.xml:
     </profile>
 ```
 
-## Step 3: \[Dockerization\] Add ```Dockerfile```, ```setenv.sh``` and ```indexenv.sh```
+## Step 3: \[Dockerization\] Add ```Dockerfile```, ```setenv.sh``` and ```index-init.sh```
 
 Copy [Dockerfile](examples/Dockerfile) to your project root folder, next to the root ```pom.xml```.
 
 Review the **Environment Variable Configurations** section in the ```Dockerfile``` and adjust somethings if necessary for your environment.
 
-Copy [setenv.sh](examples/setenv.sh) and [indexenv.sh](examples/indexenv.sh) to ```src/main/tomcat/bin/``` folder in your project.
-If you want to change the path for the scripts, feel free to move those script files to somewhere else in your project, but update the ```SETENV_SH``` and ```INDEXENV_SH``` build arguments in the ```docker``` profile in the previous section accordingly.
+Copy [setenv.sh](examples/setenv.sh) and [index-init.sh](examples/index-init.sh) to ```src/main/tomcat/bin/``` folder in your project.
+If you want to change the path for the scripts, feel free to move those script files to somewhere else in your project, but update the ```SETENV_SH``` and ```INDEX_INIT_SH``` build arguments in the ```docker``` profile in the previous section accordingly.
 
-**Note**: [setenv.sh](examples/setenv.sh) is responsible for checking and executing [indexenv.sh](examples/indexenv.sh), and [indexenv.sh](examples/indexenv.sh) is responsible for checking if the latest index export zip file is available and copying it to the local index directory if not existing on startup.
+**Note**: [setenv.sh](examples/setenv.sh) is responsible for checking and executing [index-init.sh](examples/index-init.sh), and [index-init.sh](examples/index-init.sh) is responsible for checking if the latest index export zip file is available and copying it to the local index directory if not existing on startup.
 
 ## Step 4: Create Docker image
 
