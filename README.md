@@ -18,7 +18,7 @@ Therefore, please make sure your distribution profile (```mvn -P dist``` by defa
 
 If you just want to extract the default ```repository.xml``` used in local development environment with using H2 database, just for testing, then please download it from [https://code.onehippo.org/cms-community/hippo-repository/blob/master/resources/src/main/resources/org/hippoecm/repository/repository.xml](https://code.onehippo.org/cms-community/hippo-repository/blob/master/resources/src/main/resources/org/hippoecm/repository/repository.xml) to ```conf/repository.xml```.
 
-Note: Any new file items must be configured in the distribution assembly XML file(s) properly to be included in the distribution tar ball in the end. For example, if you added ```conf/repository.xml``` in the source folder, then don't forget to add the following in ```src/main/assembly/conf-component.xml``` file (or ```src/main/assembly/distribution.xml``` file in v11 or earlier). Otherwise, the ```conf/repository/xml``` wouldn't be included in the distribution tar ball:
+**Note**: Any new file items must be configured in the distribution assembly XML file(s) properly to be included in the distribution tar ball in the end. For example, if you added ```conf/repository.xml``` in the source folder, then don't forget to add the following in ```src/main/assembly/conf-component.xml``` file (or ```src/main/assembly/distribution.xml``` file in v11 or earlier). Otherwise, the ```conf/repository/xml``` wouldn't be included in the distribution tar ball:
 
 ```xml
     <file>
@@ -79,10 +79,10 @@ Copy [Dockerfile](examples/Dockerfile) to your project root folder, next to the 
 
 Review the **Environment Variable Configurations** section in the ```Dockerfile``` and adjust somethings if necessary for your environment.
 
-Copy [setenv.sh](examples/setenv.sh) and [indexenv.sh](examples/indexenv.sh) to ```src/main/tomcat/bin``` folder in your project.
-If you want to change the path for the scripts, feel free to move those to other project folder, but update the ```SETENV_SH``` and ```INDEXENV_SH``` build argument in the ```docker``` profile accordingly.
+Copy [setenv.sh](examples/setenv.sh) and [indexenv.sh](examples/indexenv.sh) to ```src/main/tomcat/bin/``` folder in your project.
+If you want to change the path for the scripts, feel free to move those script files to somewhere else, but update the ```SETENV_SH``` and ```INDEXENV_SH``` build arguments in the ```docker``` profile in the previous section accordingly.
 
-[setenv.sh](examples/setenv.sh) is responsible for checking and executing [indexenv.sh](examples/indexenv.sh), and [indexenv.sh](examples/indexenv.sh) is responsible for checking if the latest index export zip file is available and copying it to the local index directory if not existing on startup.
+**Note**: [setenv.sh](examples/setenv.sh) is responsible for checking and executing [indexenv.sh](examples/indexenv.sh), and [indexenv.sh](examples/indexenv.sh) is responsible for checking if the latest index export zip file is available and copying it to the local index directory if not existing on startup.
 
 ## Step 4: Create Docker image
 
