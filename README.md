@@ -4,29 +4,15 @@ This recipe explains how to dockerize a Hippo CMS project, using [Dockerfile Mav
 
 ## Steps Overview
 
-- Step 1: Review and Correct Project Distribution Profile.
+- Step 1: Review and Correct Project Distribution Profile(s).
 - Step 2: **\[Dockerization\]** Add ```docker``` profile.
 - Step 3: **\[Dockerization\]** Add ```Dockerfile```, ```setenv.sh``` and ```index-init.sh```.
 - Step 4: Create Docker image
 - Step 5: Test and Validation
 
-## Step 1: Review and Correct Project Distribution Profile
+## Step 1: Review and Correct Project Distribution Profile(s)
 
-This recipe assumes that the distribution tar ball, which is created by ```mvn -P dist``` profile (or a custom one similar to that), contains every files for deployment, including ```conf/repository.xml```, ```conf/context.xml```, ```conf/log4j2.xml```, ```webapps/*.war```, ```common/lib/*.jar``` and ```shared/lib/*.jar``` files.
-
-Therefore, please make sure your distribution profile (```mvn -P dist``` by default, or a custom one if necessary) contains everything necessary. For example, ```conf/repository.xml``` is not included by default for local development environment.
-
-If you just want to extract the default ```repository.xml``` used in local development environment with using H2 database, just for testing, then please download it from [https://code.onehippo.org/cms-community/hippo-repository/blob/master/resources/src/main/resources/org/hippoecm/repository/repository.xml](https://code.onehippo.org/cms-community/hippo-repository/blob/master/resources/src/main/resources/org/hippoecm/repository/repository.xml) to ```conf/repository.xml```.
-
-**Note**: Any new file items must be configured in the distribution assembly XML file(s) properly to be included in the distribution tar ball in the end. For example, if you added ```conf/repository.xml``` in the source folder, then don't forget to add the following in ```src/main/assembly/conf-component.xml``` file (or ```src/main/assembly/distribution.xml``` file in v11 or earlier). Otherwise, the ```conf/repository/xml``` wouldn't be included in the distribution tar ball:
-
-```xml
-    <file>
-      <source>conf/repository.xml</source>
-      <outputDirectory>conf</outputDirectory>
-      <destName>repository.xml</destName>
-    </file>
-```
+This recipe reuses and depends on your existing distribution Maven profile(s), assuming that the distribution tar ball, which is created by ```mvn -P dist``` profile (or a custom one similar to that), contains every artifacts for deployment, including ```conf/context.xml```, ```conf/log4j2.xml```, ```webapps/*.war```, ```common/lib/*.jar```, ```shared/lib/*.jar```, etc.
 
 For the detailed layout of the standard distribution tar ball, please see the following page:
 
@@ -63,6 +49,7 @@ Add the following profile in the root pom.xml:
               <tag>${project.version}</tag>
               <buildArgs>
                 <TAR_BALL>target/${project.artifactId}-${project.version}-distribution.tar.gz</TAR_BALL>
+                <REPOSITORY_XML>src/main/tomcat/conf/repository.xml</REPOSITORY_XML>
                 <SETENV_SH>src/main/tomcat/bin/setenv.sh</SETENV_SH>
                 <INDEX_INIT_SH>src/main/tomcat/bin/index-init.sh</INDEX_INIT_SH>
               </buildArgs>
@@ -73,13 +60,20 @@ Add the following profile in the root pom.xml:
     </profile>
 ```
 
-## Step 3: \[Dockerization\] Add ```Dockerfile```, ```setenv.sh``` and ```index-init.sh```
+## Step 3: \[Dockerization\] Add ```Dockerfile```, ```repository.xml```, ```setenv.sh``` and ```index-init.sh```
 
-Copy [Dockerfile](examples/Dockerfile) to your project root folder, next to the root ```pom.xml```.
+### Copy [Dockerfile](examples/Dockerfile) to your project root folder, next to the root ```pom.xml```.
 
 Review the **Environment Variable Configurations** section in the ```Dockerfile``` and adjust somethings if necessary for your environment.
 
-Copy [setenv.sh](examples/setenv.sh) and [index-init.sh](examples/index-init.sh) to ```src/main/tomcat/bin/``` folder in your project.
+### Add a repository.xml to be used in the Docker containers to ```src/main/tomcat/conf/``` folder in your project.
+
+If you want to change the path for the repository configuration XML file, feel free to move it to somewhere else in your project, but update the ```REPOSITORY_XML``` build argument in the ```docker``` profile in the previous section accordingly.
+
+**Note**: If you just want to extract the default ```repository.xml``` (using H2 database) which is used in local development environment with ```cargo.run``` profile, for testing purpose, then please download the default ```repository.xml``` from [https://code.onehippo.org/cms-community/hippo-repository/blob/master/resources/src/main/resources/org/hippoecm/repository/repository.xml](https://code.onehippo.org/cms-community/hippo-repository/blob/master/resources/src/main/resources/org/hippoecm/repository/repository.xml).
+
+### Copy [setenv.sh](examples/setenv.sh) and [index-init.sh](examples/index-init.sh) to ```src/main/tomcat/bin/``` folder in your project.
+
 If you want to change the path for the scripts, feel free to move those script files to somewhere else in your project, but update the ```SETENV_SH``` and ```INDEX_INIT_SH``` build arguments in the ```docker``` profile in the previous section accordingly.
 
 **Note**: [setenv.sh](examples/setenv.sh) is responsible for checking and executing [index-init.sh](examples/index-init.sh), and [index-init.sh](examples/index-init.sh) is responsible for checking if the latest index export zip file is available and copying it to the local index directory if not existing on startup.
@@ -99,6 +93,8 @@ $ docker run -p 8080:8080 "cms/myhippoproject:0.1.0-SNAPSHOT"
 ```
 
 Visit http://localhost:8080/site for delivery tier application, and visit http://localhost:8080/cms/ for authoring tier application, for example.
+
+
 
 ## Useful Docker Documentation References
 
