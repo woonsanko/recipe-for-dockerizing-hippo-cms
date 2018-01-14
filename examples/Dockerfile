@@ -28,6 +28,9 @@ ENV REPO_PATH "${CATALINA_BASE}/repository"
 # Bootstrapping enabled?
 ENV REPO_BOOTSTRAP "true"
 
+# Index Export Zip file, that could be shared through a volume.
+ENV INDEX_EXPORT_ZIP "/data/index/index-export-latest.zip"
+
 # Repository Cluster Node ID
 ENV CLUSTER_ID "$(whoami)-$(hostname -f)"
 
@@ -57,6 +60,12 @@ ENV CATALINA_OPTS "${JVM_OPTS} ${VGC_OPTS} ${REP_OPTS} ${DMP_OPTS} ${RMI_OPTS} $
 RUN rm -rf ${CATALINA_BASE}/common/lib/*.jar
 RUN rm -rf ${CATALINA_BASE}/shared/lib/*.jar
 RUN rm -rf ${CATALINA_BASE}/webapps/*
+
+ARG SETENV_SH
+COPY ${SETENV_SH} ${CATALINA_BASE}/bin/
+
+ARG INDEXENV_SH
+COPY ${INDEXENV_SH} ${CATALINA_BASE}/bin/
 
 ARG TAR_BALL
 ADD ${TAR_BALL} ${CATALINA_BASE}/
