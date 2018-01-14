@@ -76,7 +76,7 @@ If you want to change the path for the repository configuration XML file, feel f
 
 If you want to change the path for the scripts, feel free to move those script files to somewhere else in your project, but update the ```SETENV_SH``` and ```INDEX_INIT_SH``` build arguments in the ```docker``` profile in the previous section accordingly.
 
-**Note**: [setenv.sh](examples/setenv.sh) is responsible for checking and executing [index-init.sh](examples/index-init.sh), and [index-init.sh](examples/index-init.sh) is responsible for checking if the latest index export zip file is available and copying it to the local index directory if not existing on startup.
+**Note**: [setenv.sh](examples/setenv.sh) is responsible for setting and merging some environment variables, and also for checking and executing [index-init.sh](examples/index-init.sh). [index-init.sh](examples/index-init.sh) is responsible for checking if the latest index export zip file is available from somewhere (e.g, a shared Docker volume) and copying it to the local index directory if not existing on startup.
 
 ## Step 4: Create Docker image
 
