@@ -106,3 +106,4 @@ Visit http://localhost:8080/site for delivery tier application, and visit http:/
 - [docker docs: Dockerfile reference](https://docs.docker.com/engine/reference/builder/)
 - [docker docs: Command-Line Interfaces (CLIs)](https://docs.docker.com/engine/reference/commandline/docker/)
 - [DevTools CLI Documentation: Docs: Common Tasks: SSH into a container](http://phase2.github.io/devtools/common-tasks/ssh-into-a-container/)
+- [Experience Plugin: Lucene Index Export add-on](https://www.onehippo.org/library/enterprise/enterprise-features/lucene-index-export/lucene-index-export.html)
