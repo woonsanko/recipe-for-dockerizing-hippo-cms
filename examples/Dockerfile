@@ -1,4 +1,4 @@
-# Licensed to the Apache Software Foundation (ASF) under one or more
+## Licensed to the Apache Software Foundation (ASF) under one or more
 # contributor license agreements.  See the NOTICE file distributed with
 # this work for additional information regarding copyright ownership.
 # The ASF licenses this file to You under the Apache License, Version 2.0
@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-###############################################################################
+##############################################################################
 # Base Image
 ###############################################################################
 
@@ -35,6 +35,8 @@ ENV MIN_HEAP_SIZE "1024m"
 ENV MAX_HEAP_SIZE "2048m"
 
 # Repository Configuration File
+ARG REPOSITORY_XML
+COPY ${REPOSITORY_XML} ${CATALINA_BASE}/conf/repository.xml
 ENV REPO_CONFIG "file:${CATALINA_BASE}/conf/repository.xml"
 
 # Repository Directory
@@ -43,30 +45,11 @@ ENV REPO_PATH "${CATALINA_BASE}/repository"
 # Bootstrapping enabled?
 ENV REPO_BOOTSTRAP "true"
 
-# Index Export Zip file, that could be shared through a volume.
+# Index Export Zip file, that could possibly be shared through a shared Docker Volume.
 ENV INDEX_EXPORT_ZIP "/data/index/index-export-latest.zip"
 
 # Repository Cluster Node ID
 ENV CLUSTER_ID "$(whoami)-$(hostname -f)"
-
-###############################################################################
-# Merging the Environment Variables
-###############################################################################
-
-ENV REP_OPTS "-Drepo.bootstrap=${REPO_BOOTSTRAP} -Drepo.config=${REPO_CONFIG} -Drepo.path=${REPO_PATH}"
-ENV JVM_OPTS "-server -Xms${MIN_HEAP_SIZE} -Xmx${MAX_HEAP_SIZE} -XX:+UseG1GC -Djava.util.Arrays.useLegacyMergeSort=true"
-ENV DMP_OPTS "-XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=${CATALINA_BASE}/temp"
-ENV RMI_OPTS "-Djava.rmi.server.hostname=127.0.0.1"
-ENV JRC_OPTS "-Dorg.apache.jackrabbit.core.cluster.node_id=${CLUSTER_ID}"
-
-# Logging Configurations
-ENV L4J_OPTS "-Dlog4j.configurationFile=file://${CATALINA_BASE}/conf/log4j2.xml -DLog4jContextSelector=org.apache.logging.log4j.core.selector.BasicContextSelector"
-# Uncomment the following line for Hippo CMS v11 or earlier version instead.
-# ENV L4J_OPTS="-Dlog4j.configuration=file://${CATALINA_BASE}/conf/log4j.xml"
-
-ENV VGC_OPTS "-verbosegc -XX:+PrintGCDetails -XX:+PrintGCDateStamps -Xloggc:${CATALINA_BASE}/logs/gc.log -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=5 -XX:GCLogFileSize=2048k"
-
-ENV CATALINA_OPTS "${JVM_OPTS} ${VGC_OPTS} ${REP_OPTS} ${DMP_OPTS} ${RMI_OPTS} ${L4J_OPTS} ${JRC_OPTS}"
 
 ###############################################################################
 # Remove existing artifacts and install new ones by extracting the tar ball
