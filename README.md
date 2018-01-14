@@ -12,7 +12,7 @@ This recipe explains how to dockerize a Hippo CMS project, using [Dockerfile Mav
 
 ## Step 1: Review and Correct Project Distribution Profile(s)
 
-This recipe reuses and depends on your existing distribution Maven profile(s), assuming that the distribution tar ball, which is created by ```mvn -P dist``` profile (or a custom one similar to that), contains every artifacts for deployment, including ```conf/context.xml```, ```conf/log4j2.xml```, ```webapps/*.war```, ```common/lib/*.jar```, ```shared/lib/*.jar```, etc.
+This recipe reuses and depends on your existing distribution Maven profile(s), assuming that the distribution tar ball, which is created by ```mvn -P dist``` profile (or a custom one similar to that), contains every artifact to deploy, including ```conf/context.xml```, ```conf/log4j2.xml```, ```webapps/*.war```, ```common/lib/*.jar```, ```shared/lib/*.jar```, etc.
 
 For the detailed layout of the standard distribution tar ball, please see the following page:
 
