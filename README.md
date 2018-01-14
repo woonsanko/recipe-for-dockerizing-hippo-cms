@@ -88,13 +88,27 @@ $ mvn clean verify && mvn -P dist && mvn -P docker
 
 ## Step 5: Validation
 
+You can run a container like the following example:
+
 ```bash
-$ docker run -p 8080:8080 "cms/myhippoproject:0.1.0-SNAPSHOT"
+$ docker run --name myhippo --rm -p 8080:8080 "cms/myhippoproject:0.1.0-SNAPSHOT"
 ```
+
+**Note**: Add ```-d``` option to start the container as detached.
 
 Visit http://localhost:8080/site for delivery tier application, and visit http://localhost:8080/cms/ for authoring tier application, for example.
 
+Check the startup logs with the following example command:
 
+```bash
+$ docker logs myhippo
+```
+
+You can browse all the files deployed, with the following example command:
+
+```bash
+$ docker exec myhippo find /usr/local/tomcat
+```
 
 ## Useful Docker Documentation References
 
