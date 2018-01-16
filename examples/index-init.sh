@@ -33,7 +33,7 @@ else
 fi
 
 ##########################################################################
-# Configuration Parameters
+# Internal Parameters
 ##########################################################################
 
 # Local index exported zip file name to be downloaded in a temporary directory.
@@ -46,7 +46,7 @@ if [ ! -z "${CATALINA_BASE}" ]; then
 fi
 
 ##########################################################################
-# Internal Backup Flow from here.
+# Internal Flow from here.
 ##########################################################################
 
 LOCAL_INDEX_DIR="$REPO_PATH/workspaces/default/index"
