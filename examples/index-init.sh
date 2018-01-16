@@ -57,78 +57,81 @@ TEMP_DOWNLOAD_INDEX_ZIP="${TEMP_DOWNLOAD_DIR}/${LOCAL_INDEX_ZIP}"
 
 if [ -d "${LOCAL_INDEX_DIR}" ]; then
   echo "No need to initialize the index as it already exists at ${LOCAL_INDEX_DIR} ..."
-  exit 0
+else
+
+  # If there's any local download file, remove it first before downloading.
+  if [ -f "${TEMP_DOWNLOAD_INDEX_ZIP}" ]; then
+    rm ${TEMP_DOWNLOAD_INDEX_ZIP}
+  fi
+
+  # Make temp directory if not existing.
+  mkdir -p ${TEMP_DOWNLOAD_DIR}
+
+  LOCAL_INDEX_ZIP_DOWNLOADED="false"
+
+  # Loop each index export download URL and break the loop when successful.
+  for INDEX_URI in $INDEX_DOWNLOAD_URIS; do
+    # Download the latest index export zip file.
+    case "${INDEX_URI}" in
+      sftp://*)
+        sftp ${INDEX_URI:7} ${TEMP_DOWNLOAD_INDEX_ZIP}
+        if [ $? -eq 0 ]; then
+          LOCAL_INDEX_ZIP_DOWNLOADED="true"
+          break
+        fi
+        ;;
+      http://*)
+        curl -f ${INDEX_URI} -o ${TEMP_DOWNLOAD_INDEX_ZIP}
+        if [ $? -eq 0 ]; then
+          LOCAL_INDEX_ZIP_DOWNLOADED="true"
+          break
+        fi
+        ;;
+      https://*)
+        curl -f ${INDEX_URI} -o ${TEMP_DOWNLOAD_INDEX_ZIP}
+        if [ $? -eq 0 ]; then
+          LOCAL_INDEX_ZIP_DOWNLOADED="true"
+          break
+        fi
+        ;;
+      file://*)
+        cp ${INDEX_URI:7} ${TEMP_DOWNLOAD_INDEX_ZIP}
+        if [ $? -eq 0 ]; then
+          LOCAL_INDEX_ZIP_DOWNLOADED="true"
+          break
+        fi
+        ;;
+      file:*)
+        cp ${INDEX_URI:5} ${TEMP_DOWNLOAD_INDEX_ZIP}
+        if [ $? -eq 0 ]; then
+          LOCAL_INDEX_ZIP_DOWNLOADED="true"
+          break
+        fi
+        ;;
+      *)
+        cp ${INDEX_URI} ${TEMP_DOWNLOAD_INDEX_ZIP}
+        if [ $? -eq 0 ]; then
+          LOCAL_INDEX_ZIP_DOWNLOADED="true"
+          break
+        fi
+        ;;
+    esac
+  done
+
+  # Fail if it failed to download index export zip file.
+  if [ "${LOCAL_INDEX_ZIP_DOWNLOADED}" != "true" ]; then
+    echo "Failed to download index export zip file."
+  else
+
+    # Make the lucene index directory under the repository directory path if not existing.
+    mkdir -p ${LOCAL_INDEX_DIR}
+    # Unzip the index export zip to the index directory.
+    unzip ${TEMP_DOWNLOAD_INDEX_ZIP} -d ${LOCAL_INDEX_DIR}
+
+    # Remove the temporary index export zip file
+    rm ${TEMP_DOWNLOAD_INDEX_ZIP}
+
+  fi
+
 fi
 
-# If there's any local download file, remove it first before downloading.
-if [ -f "${TEMP_DOWNLOAD_INDEX_ZIP}" ]; then
-  rm ${TEMP_DOWNLOAD_INDEX_ZIP}
-fi
-
-# Make temp directory if not existing.
-mkdir -p ${TEMP_DOWNLOAD_DIR}
-
-LOCAL_INDEX_ZIP_DOWNLOADED="false"
-
-# Loop each index export download URL and break the loop when successful.
-for INDEX_URI in $INDEX_DOWNLOAD_URIS; do
-  # Download the latest index export zip file.
-  case "${INDEX_URI}" in
-    sftp://*)
-      sftp ${INDEX_URI:7} ${TEMP_DOWNLOAD_INDEX_ZIP}
-      if [ $? -eq 0 ]; then
-        LOCAL_INDEX_ZIP_DOWNLOADED="true"
-        break
-      fi
-      ;;
-    http://*)
-      curl -f ${INDEX_URI} -o ${TEMP_DOWNLOAD_INDEX_ZIP}
-      if [ $? -eq 0 ]; then
-        LOCAL_INDEX_ZIP_DOWNLOADED="true"
-        break
-      fi
-      ;;
-    https://*)
-      curl -f ${INDEX_URI} -o ${TEMP_DOWNLOAD_INDEX_ZIP}
-      if [ $? -eq 0 ]; then
-        LOCAL_INDEX_ZIP_DOWNLOADED="true"
-        break
-      fi
-      ;;
-    file://*)
-      cp ${INDEX_URI:7} ${TEMP_DOWNLOAD_INDEX_ZIP}
-      if [ $? -eq 0 ]; then
-        LOCAL_INDEX_ZIP_DOWNLOADED="true"
-        break
-      fi
-      ;;
-    file:*)
-      cp ${INDEX_URI:5} ${TEMP_DOWNLOAD_INDEX_ZIP}
-      if [ $? -eq 0 ]; then
-        LOCAL_INDEX_ZIP_DOWNLOADED="true"
-        break
-      fi
-      ;;
-    *)
-      cp ${INDEX_URI} ${TEMP_DOWNLOAD_INDEX_ZIP}
-      if [ $? -eq 0 ]; then
-        LOCAL_INDEX_ZIP_DOWNLOADED="true"
-        break
-      fi
-      ;;
-  esac
-done
-
-# Fail if it failed to download index export zip file.
-if [ "${LOCAL_INDEX_ZIP_DOWNLOADED}" != "true" ]; then
-  echo "Failed to download index export zip file."
-  exit 1
-fi
-
-# Make the lucene index directory under the repository directory path if not existing.
-mkdir -p ${LOCAL_INDEX_DIR}
-# Unzip the index export zip to the index directory.
-unzip ${TEMP_DOWNLOAD_INDEX_ZIP} -d ${LOCAL_INDEX_DIR}
-
-# Remove the temporary index export zip file
-rm ${TEMP_DOWNLOAD_INDEX_ZIP}
