@@ -67,5 +67,5 @@ CATALINA_OPTS="${JVM_OPTS} ${VGC_OPTS} ${REP_OPTS} ${DMP_OPTS} ${RMI_OPTS} ${L4J
 
 # Execute ${CATALINA_BASE}/bin/index-init.sh if exits.
 if [ -r "${CATALINA_BASE}/bin/index-init.sh" ]; then
-  . "${CATALINA_BASE}/bin/index-init.sh" "${REPO_PATH}" ${INDEX_EXPORT_ZIP_URIS}
+  . "${CATALINA_BASE}/bin/index-init.sh" "${REPO_PATH}" ${INDEX_EXPORT_ZIP}
 fi
