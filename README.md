@@ -113,7 +113,7 @@ $ docker exec myhippo find /usr/local/tomcat
 
 - [index-backup.sh](examples/index-backup.sh) can be executed manually or periodically/automatically by configuring it as a CRON job) to download the latest index export zip file and create a symbolic link for the latest download zip file. See the usages in [index-backup.sh](examples/index-backup.sh).
 
-## Useful Docker Documentation References
+## References
 
 - [docker docs: Getting Started](https://docs.docker.com/get-started/)
 - [docker docs: Dockerfile reference](https://docs.docker.com/engine/reference/builder/)
