@@ -45,7 +45,8 @@ ENV REPO_PATH "${CATALINA_BASE}/repository"
 # Bootstrapping enabled?
 ENV REPO_BOOTSTRAP "true"
 
-# Index Export Zip file, that could possibly be shared through a shared Docker Volume.
+# Index Export Zip file download URIs (e.g, file path that could possibly be shared through a shared Docker Volume).
+# Note: You can set space-separated string to specify multiple URIs including SFTP, HTTP, HTTPS, etc. See index-init.sh for detail.
 ENV INDEX_EXPORT_ZIP "/data/index/index-export-latest.zip"
 
 # Repository Cluster Node ID
