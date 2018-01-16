@@ -133,4 +133,3 @@ elif [ ! -z "${REPO_PATH}" ] && [ ! -z "${INDEX_DOWNLOAD_URIS}" ]; then
   fi
 
 fi
-
