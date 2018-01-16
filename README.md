@@ -2,7 +2,7 @@
 
 This recipe explains how to dockerize a Hippo CMS project, using [Dockerfile Maven Plugin](https://github.com/spotify/dockerfile-maven) and a Dockerfile, based on the existing maven profiles such as ```mvn -P dist```, for simplicity.
 
-## Steps Overview
+## Overview
 
 - Step 1: Review and Correct Project Distribution Profile(s).
 - Step 2: **\[Dockerization\]** Add ```docker``` profile.
@@ -109,6 +109,9 @@ You can browse all the files deployed, with the following example command:
 ```bash
 $ docker exec myhippo find /usr/local/tomcat
 ```
+## Other Useful Scripts
+
+- [index-backup.sh](examples/index-backup.sh) can be executed manually or periodically/automatically by configuring it as a CRON job) to download the latest index export zip file and create a symbolic link for the latest download zip file. See the usages in [index-backup.sh](examples/index-backup.sh).
 
 ## Useful Docker Documentation References
 
