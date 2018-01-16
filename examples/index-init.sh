@@ -26,14 +26,11 @@ if [ "$#" -lt 2 ]; then
   echo "    > $0 /usr/local/tomcat/storage file:/data/index-export-latest.zip"
   echo "    > $0 /usr/local/tomcat/storage /data/index-export-latest.zip"
   echo
-  exit 1
+else
+  REPO_PATH="${1}"
+  shift
+  INDEX_DOWNLOAD_URIS="$@"
 fi
-
-# The base repository directory (e.g, "storage").
-REPO_PATH="${1}"
-
-shift
-INDEX_DOWNLOAD_URIS="$@"
 
 ##########################################################################
 # Configuration Parameters
@@ -56,8 +53,10 @@ LOCAL_INDEX_DIR="$REPO_PATH/workspaces/default/index"
 TEMP_DOWNLOAD_INDEX_ZIP="${TEMP_DOWNLOAD_DIR}/${LOCAL_INDEX_ZIP}"
 
 if [ -d "${LOCAL_INDEX_DIR}" ]; then
+
   echo "No need to initialize the index as it already exists at ${LOCAL_INDEX_DIR} ..."
-else
+
+elif [ ! -z "${REPO_PATH}" ] && [ ! -z "${INDEX_DOWNLOAD_URIS}" ]; then
 
   # If there's any local download file, remove it first before downloading.
   if [ -f "${TEMP_DOWNLOAD_INDEX_ZIP}" ]; then
