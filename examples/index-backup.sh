@@ -21,6 +21,7 @@ if [ "$#" -lt 2 ]; then
   echo
   echo "  Examples:"
   echo "    > $0 /data/index http://admin:admin@localhost:8080/cms/ws/indexexport"
+  echo "    > $0 /data/index http://admin:admin@server1:8080/cms/ws/indexexport http://admin:admin@server2:8080/cms/ws/indexexport"
   echo
   exit 1
 fi
