@@ -69,7 +69,7 @@ elif [ ! -z "${REPO_PATH}" ] && [ ! -z "${INDEX_DOWNLOAD_URIS}" ]; then
   LOCAL_INDEX_ZIP_DOWNLOADED="false"
 
   # Loop each index export download URL and break the loop when successful.
-  for INDEX_URI in $INDEX_DOWNLOAD_URIS; do
+  for INDEX_URI in ${INDEX_DOWNLOAD_URIS}; do
     # Download the latest index export zip file.
     case "${INDEX_URI}" in
       sftp://*)
@@ -94,24 +94,33 @@ elif [ ! -z "${REPO_PATH}" ] && [ ! -z "${INDEX_DOWNLOAD_URIS}" ]; then
         fi
         ;;
       file://*)
-        cp ${INDEX_URI:7} ${TEMP_DOWNLOAD_INDEX_ZIP}
-        if [ $? -eq 0 ]; then
-          LOCAL_INDEX_ZIP_DOWNLOADED="true"
-          break
+        INDEX_URI_FILE_PATH="${INDEX_URI:7}"
+        if [ -r "${INDEX_URI_FILE_PATH}" ]; then
+          cp ${INDEX_URI_FILE_PATH} ${TEMP_DOWNLOAD_INDEX_ZIP}
+          if [ $? -eq 0 ]; then
+            LOCAL_INDEX_ZIP_DOWNLOADED="true"
+            break
+          fi
         fi
         ;;
       file:*)
-        cp ${INDEX_URI:5} ${TEMP_DOWNLOAD_INDEX_ZIP}
-        if [ $? -eq 0 ]; then
-          LOCAL_INDEX_ZIP_DOWNLOADED="true"
-          break
+        INDEX_URI_FILE_PATH="${INDEX_URI:5}"
+        if [ -r "${INDEX_URI_FILE_PATH}" ]; then
+          cp ${INDEX_URI_FILE_PATH} ${TEMP_DOWNLOAD_INDEX_ZIP}
+          if [ $? -eq 0 ]; then
+            LOCAL_INDEX_ZIP_DOWNLOADED="true"
+            break
+          fi
         fi
         ;;
       *)
-        cp ${INDEX_URI} ${TEMP_DOWNLOAD_INDEX_ZIP}
-        if [ $? -eq 0 ]; then
-          LOCAL_INDEX_ZIP_DOWNLOADED="true"
-          break
+        INDEX_URI_FILE_PATH="${INDEX_URI}"
+        if [ -r "${INDEX_URI_FILE_PATH}" ]; then
+          cp ${INDEX_URI_FILE_PATH} ${TEMP_DOWNLOAD_INDEX_ZIP}
+          if [ $? -eq 0 ]; then
+            LOCAL_INDEX_ZIP_DOWNLOADED="true"
+            break
+          fi
         fi
         ;;
     esac
@@ -119,7 +128,7 @@ elif [ ! -z "${REPO_PATH}" ] && [ ! -z "${INDEX_DOWNLOAD_URIS}" ]; then
 
   # Fail if it failed to download index export zip file.
   if [ "${LOCAL_INDEX_ZIP_DOWNLOADED}" != "true" ]; then
-    echo "Failed to download index export zip file."
+    echo "Failed to download index export zip file from ${INDEX_DOWNLOAD_URIS}."
   else
 
     # Make the lucene index directory under the repository directory path if not existing.
