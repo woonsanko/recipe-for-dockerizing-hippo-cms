@@ -120,3 +120,5 @@ $ docker exec myhippo find /usr/local/tomcat
 - [docker docs: Command-Line Interfaces (CLIs)](https://docs.docker.com/engine/reference/commandline/docker/)
 - [DevTools CLI Documentation: Docs: Common Tasks: SSH into a container](http://phase2.github.io/devtools/common-tasks/ssh-into-a-container/)
 - [Experience Plugin: Lucene Index Export add-on](https://www.onehippo.org/library/enterprise/enterprise-features/lucene-index-export/lucene-index-export.html)
+- [StackOverflow: From inside of a Docker container, how do I connect to the localhost of the machine?](https://stackoverflow.com/questions/24319662/from-inside-of-a-docker-container-how-do-i-connect-to-the-localhost-of-the-mach/24326540#24326540)
+
