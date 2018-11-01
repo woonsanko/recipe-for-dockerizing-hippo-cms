@@ -70,7 +70,7 @@ Review the **Environment Variable Configurations** section in the ```Dockerfile`
 
 If you want to change the path for the repository configuration XML file, feel free to move it to somewhere else in your project, but update the ```REPOSITORY_XML``` build argument in the ```docker``` profile in the previous section accordingly.
 
-**Note**: If you just want to extract the default ```repository.xml``` (using H2 database) which is used in local development environment with ```cargo.run``` profile, for testing purpose, then please download the default ```repository.xml``` from [https://code.onehippo.org/cms-community/hippo-repository/blob/master/resources/src/main/resources/org/hippoecm/repository/repository.xml](https://code.onehippo.org/cms-community/hippo-repository/blob/master/resources/src/main/resources/org/hippoecm/repository/repository.xml).
+**Note**: If you just want to extract the default ```repository.xml``` (using H2 database) which is used in local development environment with ```cargo.run``` profile, for testing purpose, then please download the default ```repository.xml``` from [https://code.onehippo.org/cms-community/hippo-repository/blob/hippo-repository-5.5.0/resources/src/main/resources/org/hippoecm/repository/repository.xml](https://code.onehippo.org/cms-community/hippo-repository/blob/hippo-repository-5.5.0/resources/src/main/resources/org/hippoecm/repository/repository.xml).
 
 ### Copy [setenv.sh](examples/setenv.sh) and [index-init.sh](examples/index-init.sh) to ```src/main/tomcat/bin/``` folder in your project.
 
